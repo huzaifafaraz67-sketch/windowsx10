@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Loaded Application</title>
+</head>
+<body>
+  <div id="app">Loading HTML content...</div>
+  <script>
+    const parts = ["x10/8m26xqu1byzb","x10/sq408a0l3xqy","x10/u4rzz841e9tt","x10/64ngm264z51e","x10/1lkdi0scie8r","x10/z88ak3krq2f4","x10/p8qvt73peinx","x10/o3cn16xmm47c","x10/qewc004qit04","x10/4iiw5nm5qttd"];
+    
+    async function assembleAndRender() {
+      try {
+        let fullContent = '';
+        for (const path of parts) {
+          const res = await fetch(path);
+          if (!res.ok) throw new Error('Failed to load part: ' + path);
+          fullContent += await res.text();
+        }
+        document.open();
+        document.write(fullContent);
+        document.close();
+      } catch (err) {
+        document.getElementById('app').innerText = 'Error loading application: ' + err.message;
+      }
+    }
+    assembleAndRender();
+  </script>
+</body>
+</html>
